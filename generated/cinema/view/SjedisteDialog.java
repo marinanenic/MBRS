@@ -20,10 +20,10 @@ public class SjedisteDialog extends JDialog implements ActionListener {
 	public SjedisteDialog(){};
 	
 	public SjedisteDialog(Object id, int index, Object parent, JPanel panel) {
-		super(MainFrame.getInstance(), "Dodaj (Sjediste)", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Dodaj (Sjediste)", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/4, getPreferredSize().height));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -113,7 +113,7 @@ public class SjedisteDialog extends JDialog implements ActionListener {
 					((SjedistePanel)panel).updateRow(newSjediste, index);
 				}
 				setVisible(false); 
-				MainFrame.getInstance().revalidate();
+				MyApp.instance.revalidate();
 				dispose();
 			}
 		});

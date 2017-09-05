@@ -43,10 +43,10 @@ public class ${class.name}Dialog extends JDialog implements ActionListener {
 	public ${class.name}Dialog(){};
 	
 	public ${class.name}Dialog(Object id, ${properties?first.type} index, Object parent, JPanel panel) {
-		super(MainFrame.getInstance(), "Dodaj (${class.name})", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Dodaj (${class.name})", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/4, getPreferredSize().height));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -107,11 +107,10 @@ public class ${class.name}Dialog extends JDialog implements ActionListener {
 		
 		<#elseif p.classType??>
 		JLabel label${p.name} = new JLabel("<#if p.label??>${p.label}<#else>${p.name?cap_first}</#if>:");
-		if(MainFrame.${p.classType.label?lower_case}.isEmpty())
-			MainFrame.${p.classType.label?lower_case}.addAll(${p.type}DB.get${p.classType.label}());
-		String[] list${p.name} = new String[MainFrame.${p.classType.label?lower_case}.size()];
-		for(int i = 0; i<MainFrame.${p.classType.label?lower_case}.size(); i++)
-			list${p.name}[i] = MainFrame.${p.classType.label?lower_case}.get(i).toString();
+		List<${p.type}> ${p.name}list = ${p.type}DB.get${p.classType.label}());
+		String[] list${p.name} = new String[${p.name}list.size()];
+		for(int i = 0; i<${p.name}list.size(); i++)
+			list${p.name}[i] = ${p.name}list.get(i).toString();
 		JComboBox<String> field${p.name} = new JComboBox<String>(list${p.name});
 		field${p.name}.setAlignmentX(LEFT_ALIGNMENT);
 		messagePane.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -289,7 +288,7 @@ public class ${class.name}Dialog extends JDialog implements ActionListener {
 					((${class.name}Panel)panel).updateRow(new${class.name}, index);
 				}
 				setVisible(false); 
-				MainFrame.getInstance().revalidate();
+				MyApp.instance.revalidate();
 				dispose();
 			}
 		});

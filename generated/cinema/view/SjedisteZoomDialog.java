@@ -23,10 +23,10 @@ public class SjedisteZoomDialog extends JDialog implements ActionListener {
 	private String value=null;
 	
 	public SjedisteZoomDialog(){
-		super(MainFrame.getInstance(), "Izaberite(Sjediste)", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Izaberite(Sjediste)", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/3, parentSize.height/2));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -47,7 +47,7 @@ public class SjedisteZoomDialog extends JDialog implements ActionListener {
 		columnNames.add("Naziv(Sala)");
 		
 		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		for (Sjediste sjediste : MainFrame.sjedista){
+		for (Sjediste sjediste : SjedisteDB.getSjedista()){
 			Vector<Object> v = new Vector<Object>();
 			v.add((sjediste.getSjediste_id()));
 			v.add((sjediste.getBroj()));

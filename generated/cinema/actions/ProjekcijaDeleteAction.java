@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 import cinema.database.ProjekcijaDB;
 import cinema.view.ProjekcijaPanel;
-import cinema.view.MainFrame;
+import cinema.view.MyApp;
 
 @SuppressWarnings("serial")
 public class ProjekcijaDeleteAction extends AbstractAction{
@@ -22,13 +22,13 @@ public class ProjekcijaDeleteAction extends AbstractAction{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int result = JOptionPane.showConfirmDialog(MainFrame.getInstance(), "Da li ste sigurni da zelite da nastavite?",
+		int result = JOptionPane.showConfirmDialog(MyApp.instance, "Da li ste sigurni da zelite da nastavite?",
 				"Upozorenje", JOptionPane.OK_CANCEL_OPTION);
 		if(result == JOptionPane.OK_OPTION){
 			ProjekcijaDB.deleteProjekcija(this.id);
-			ProjekcijaPanel panel = (ProjekcijaPanel)MainFrame.getInstance().getTables();
+			ProjekcijaPanel panel = (ProjekcijaPanel)MyApp.instance.getTables();
 			panel.deleteRow(index);
-			MainFrame.getInstance().revalidate();
+			MyApp.instance.revalidate();
 		}
 	}
 }

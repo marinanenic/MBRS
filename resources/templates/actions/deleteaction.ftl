@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 import ${class.typePackage}.database.${class.name}DB;
 import ${class.typePackage}.view.${class.name}Panel;
-import ${class.typePackage}.view.MainFrame;
+import ${class.typePackage}.view.MyApp;
 
 @SuppressWarnings("serial")
 public class ${class.name}DeleteAction extends AbstractAction{
@@ -22,13 +22,13 @@ public class ${class.name}DeleteAction extends AbstractAction{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int result = JOptionPane.showConfirmDialog(MainFrame.getInstance(), "Da li ste sigurni da zelite da nastavite?",
+		int result = JOptionPane.showConfirmDialog(MyApp.instance, "Da li ste sigurni da zelite da nastavite?",
 				"Upozorenje", JOptionPane.OK_CANCEL_OPTION);
 		if(result == JOptionPane.OK_OPTION){
 			${class.name}DB.delete${class.name}(this.id);
-			${class.name}Panel panel = (${class.name}Panel)MainFrame.getInstance().getTables();
+			${class.name}Panel panel = (${class.name}Panel)MyApp.instance.getTables();
 			panel.deleteRow(index);
-			MainFrame.getInstance().revalidate();
+			MyApp.instance.revalidate();
 		}
 	}
 }

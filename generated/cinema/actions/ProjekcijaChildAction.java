@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 
 import cinema.database.*;
-import cinema.view.MainFrame;
+import cinema.view.MyApp;
 import cinema.view.ProjekcijaPanel;
 
 @SuppressWarnings("serial")
@@ -27,9 +27,9 @@ public class ProjekcijaChildAction extends AbstractAction{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JDialog projekcijachilddialog = new JDialog();
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		Dimension parentSize = MyApp.instance.getSize(); 
 		projekcijachilddialog.setMinimumSize(new Dimension(2*parentSize.width/3, 2*parentSize.height/3));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		projekcijachilddialog.setLocation(p.x + parentSize.width / 6, p.y + parentSize.height / 6);
 		ProjekcijaPanel projekcijapanel = null;
 		if (film_id != null)

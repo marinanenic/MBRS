@@ -17,10 +17,10 @@ public class FilmDialog extends JDialog implements ActionListener {
 	public FilmDialog(){};
 	
 	public FilmDialog(Object id, int index, Object parent, JPanel panel) {
-		super(MainFrame.getInstance(), "Dodaj (Film)", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Dodaj (Film)", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/4, getPreferredSize().height));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -113,7 +113,7 @@ public class FilmDialog extends JDialog implements ActionListener {
 					((FilmPanel)panel).updateRow(newFilm, index);
 				}
 				setVisible(false); 
-				MainFrame.getInstance().revalidate();
+				MyApp.instance.revalidate();
 				dispose();
 			}
 		});

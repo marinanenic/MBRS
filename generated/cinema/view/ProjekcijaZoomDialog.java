@@ -29,10 +29,10 @@ public class ProjekcijaZoomDialog extends JDialog implements ActionListener {
 	private String value=null;
 	
 	public ProjekcijaZoomDialog(){
-		super(MainFrame.getInstance(), "Izaberite(Projekcija)", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Izaberite(Projekcija)", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/3, parentSize.height/2));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -59,7 +59,7 @@ public class ProjekcijaZoomDialog extends JDialog implements ActionListener {
 		columnNames.add("Tip projekcije");
 		
 		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		for (Projekcija projekcija : MainFrame.projekcije){
+		for (Projekcija projekcija : ProjekcijaDB.getProjekcije()){
 			Vector<Object> v = new Vector<Object>();
 			v.add((projekcija.getProjekcija_id()));
 			v.add(date.format(projekcija.getDatum()));

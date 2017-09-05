@@ -23,10 +23,10 @@ public class SalaZoomDialog extends JDialog implements ActionListener {
 	private String value=null;
 	
 	public SalaZoomDialog(){
-		super(MainFrame.getInstance(), "Izaberite(Sala)", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Izaberite(Sala)", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/3, parentSize.height/2));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -49,7 +49,7 @@ public class SalaZoomDialog extends JDialog implements ActionListener {
 		columnNames.add("4DX");
 		
 		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		for (Sala sala : MainFrame.sale){
+		for (Sala sala : SalaDB.getSale()){
 			Vector<Object> v = new Vector<Object>();
 			v.add((sala.getSala_id()));
 			v.add((sala.getNaziv()));

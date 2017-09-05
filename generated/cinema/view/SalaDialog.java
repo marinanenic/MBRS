@@ -17,10 +17,10 @@ public class SalaDialog extends JDialog implements ActionListener {
 	public SalaDialog(){};
 	
 	public SalaDialog(Object id, int index, Object parent, JPanel panel) {
-		super(MainFrame.getInstance(), "Dodaj (Sala)", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Dodaj (Sala)", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/4, getPreferredSize().height));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -113,7 +113,7 @@ public class SalaDialog extends JDialog implements ActionListener {
 					((SalaPanel)panel).updateRow(newSala, index);
 				}
 				setVisible(false); 
-				MainFrame.getInstance().revalidate();
+				MyApp.instance.revalidate();
 				dispose();
 			}
 		});

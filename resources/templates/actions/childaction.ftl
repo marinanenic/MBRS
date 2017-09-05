@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 
 import ${class.typePackage}.database.*;
-import ${class.typePackage}.view.MainFrame;
+import ${class.typePackage}.view.MyApp;
 import ${class.typePackage}.view.${class.name}Panel;
 
 @SuppressWarnings("serial")
@@ -35,9 +35,9 @@ public class ${class.name}ChildAction extends AbstractAction{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JDialog ${class.name?lower_case}childdialog = new JDialog();
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		Dimension parentSize = MyApp.instance.getSize(); 
 		${class.name?lower_case}childdialog.setMinimumSize(new Dimension(2*parentSize.width/3, 2*parentSize.height/3));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		${class.name?lower_case}childdialog.setLocation(p.x + parentSize.width / 6, p.y + parentSize.height / 6);
 		${class.name}Panel ${class.name?lower_case}panel = null;
 		<#assign first = true>

@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 import cinema.database.SjedisteDB;
 import cinema.view.SjedistePanel;
-import cinema.view.MainFrame;
+import cinema.view.MyApp;
 
 @SuppressWarnings("serial")
 public class SjedisteDeleteAction extends AbstractAction{
@@ -22,13 +22,13 @@ public class SjedisteDeleteAction extends AbstractAction{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int result = JOptionPane.showConfirmDialog(MainFrame.getInstance(), "Da li ste sigurni da zelite da nastavite?",
+		int result = JOptionPane.showConfirmDialog(MyApp.instance, "Da li ste sigurni da zelite da nastavite?",
 				"Upozorenje", JOptionPane.OK_CANCEL_OPTION);
 		if(result == JOptionPane.OK_OPTION){
 			SjedisteDB.deleteSjediste(this.id);
-			SjedistePanel panel = (SjedistePanel)MainFrame.getInstance().getTables();
+			SjedistePanel panel = (SjedistePanel)MyApp.instance.getTables();
 			panel.deleteRow(index);
-			MainFrame.getInstance().revalidate();
+			MyApp.instance.revalidate();
 		}
 	}
 }

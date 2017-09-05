@@ -64,10 +64,10 @@ public class ${class.name}ZoomDialog extends JDialog implements ActionListener {
 	private String value=null;
 	
 	public ${class.name}ZoomDialog(){
-		super(MainFrame.getInstance(), "Izaberite(${class.name})", true);
-		Dimension parentSize = MainFrame.getInstance().getSize(); 
+		super(MyApp.instance, "Izaberite(${class.name})", true);
+		Dimension parentSize = MyApp.instance.getSize(); 
 		setMinimumSize(new Dimension(parentSize.width/3, parentSize.height/2));
-		Point p = MainFrame.getInstance().getLocation(); 
+		Point p = MyApp.instance.getLocation(); 
 		setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		setResizable(false);
 		
@@ -129,7 +129,7 @@ public class ${class.name}ZoomDialog extends JDialog implements ActionListener {
 		</#list>
 		
 		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		for (${class.name} ${class.name?lower_case} : MainFrame.${class.label?lower_case}){
+		for (${class.name} ${class.name?lower_case} : ${class.name}DB.get${class.label}()){
 			Vector<Object> v = new Vector<Object>();
 			<#list properties as p>
 			<#if p.upper == 1>

@@ -55,14 +55,16 @@ public class MainFrameManual extends MainFrame {
         	e.printStackTrace();
         }
         
+        // može dosta elegantnije, da se podešavanje svake akcije u MainFrame-u izmjesti kao posebna metoda
+        // tada bi se redefinisala samo setFilmAction metoda u kojoj bi se instancirala i podesila FilmActionManual akcija
         menubar = new JMenuBar();
         List<Pair<String,AbstractAction>> actions = new ArrayList<Pair<String,AbstractAction>>();
-        actions.add(new Pair<String, AbstractAction>("", new SjedisteAction("Sjediste")));
-        actions.add(new Pair<String, AbstractAction>("", new ProjekcijaAction("Projekcija")));
-        actions.add(new Pair<String, AbstractAction>("", new FilmActionManual("Film")));
-        actions.add(new Pair<String, AbstractAction>("", new SalaAction("Sala")));
-        actions.add(new Pair<String, AbstractAction>("", new RezervacijaAction("Rezervacija")));
-		
+        actions.add(new Pair<String, AbstractAction>("Cinema", new SjedisteAction("Sjediste")));
+        actions.add(new Pair<String, AbstractAction>("Cinema", new ProjekcijaAction("Projekcija")));
+        actions.add(new Pair<String, AbstractAction>("Cinema", new FilmActionManual("Film")));
+        actions.add(new Pair<String, AbstractAction>("Cinema", new SalaAction("Sala")));
+        actions.add(new Pair<String, AbstractAction>("Cinema", new RezervacijaAction("Rezervacija")));
+        
 		for (Pair<String,AbstractAction> action : actions) {
         	Boolean added = false;
         	if(!action.first.equals("")){
