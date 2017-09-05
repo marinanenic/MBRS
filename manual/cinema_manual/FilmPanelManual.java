@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import cinema.Film;
 import cinema.view.FilmPanel;
+import cinema.view.MyApp;
 
 @SuppressWarnings("serial")
 public class FilmPanelManual extends FilmPanel{
@@ -23,7 +26,7 @@ public class FilmPanelManual extends FilmPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Manually reported");
+				JOptionPane.showConfirmDialog(MyApp.instance, "Ručno dodat dialog.","Izvještaj", JOptionPane.OK_CANCEL_OPTION);
 			}
 		});
 	}

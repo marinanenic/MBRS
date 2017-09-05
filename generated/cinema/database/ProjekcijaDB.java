@@ -10,10 +10,11 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import cinema.*;
 
 public class ProjekcijaDB {
+	private static SessionFactory factory = new AnnotationConfiguration().configure().buildSessionFactory();
 
 	@SuppressWarnings("unchecked")
 	public static List<Projekcija> getProjekcije(){
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		List<Projekcija> results = session.createQuery("from Projekcija").list(); 
 		t.commit();
@@ -22,7 +23,7 @@ public class ProjekcijaDB {
 	}
 	
 	public static void saveProjekcija(Projekcija projekcija) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.persist(projekcija);
 		t.commit();
@@ -30,7 +31,7 @@ public class ProjekcijaDB {
 	}
 	
 	public static Projekcija getProjekcijaById(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Projekcija projekcija = (Projekcija)session.get(Projekcija.class, id);
 		session.close();  
 		return projekcija;
@@ -39,7 +40,7 @@ public class ProjekcijaDB {
 	@SuppressWarnings("unchecked")
 	public static List<Projekcija> searchProjekcije(Date datumod, Date datumdo, Integer filmfilm_id, String filmnaziv, Integer salasala_id, String salanaziv, TipProjekcije tip) {
 	List<Projekcija> results = null;
-	Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+	Session session=factory.openSession();
 	Criteria c = session.createCriteria(Projekcija.class, "projekcija");
 	if(datumod != null)
 		c.add(Restrictions.ge("datum", datumod));
@@ -62,14 +63,14 @@ public class ProjekcijaDB {
 	}
 	
 	public static void updateProjekcija(Projekcija projekcija) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.merge(projekcija);
 		t.commit();
 	}
 	
 	public static void deleteProjekcija(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		Projekcija result = getProjekcijaById(id);
 		session.delete(result);
@@ -79,7 +80,7 @@ public class ProjekcijaDB {
 	@SuppressWarnings("unchecked")
 	public static List<Projekcija> getProjekcijeFromFilm(int film_id) {
 		List<Projekcija> results = null;
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Criteria c = session.createCriteria(Projekcija.class, "projekcija");
 		c.createAlias("projekcija.film", "film");
 		c.add(Restrictions.eq("film.film_id", film_id));
@@ -90,7 +91,7 @@ public class ProjekcijaDB {
 	@SuppressWarnings("unchecked")
 	public static List<Projekcija> getProjekcijeFromSala(int sala_id) {
 		List<Projekcija> results = null;
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Criteria c = session.createCriteria(Projekcija.class, "projekcija");
 		c.createAlias("projekcija.sala", "sala");
 		c.add(Restrictions.eq("sala.sala_id", sala_id));

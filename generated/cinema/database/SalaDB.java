@@ -9,10 +9,11 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import cinema.*;
 
 public class SalaDB {
+	private static SessionFactory factory = new AnnotationConfiguration().configure().buildSessionFactory();
 
 	@SuppressWarnings("unchecked")
 	public static List<Sala> getSale(){
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		List<Sala> results = session.createQuery("from Sala").list(); 
 		t.commit();
@@ -21,7 +22,7 @@ public class SalaDB {
 	}
 	
 	public static void saveSala(Sala sala) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.persist(sala);
 		t.commit();
@@ -29,7 +30,7 @@ public class SalaDB {
 	}
 	
 	public static Sala getSalaById(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Sala sala = (Sala)session.get(Sala.class, id);
 		session.close();  
 		return sala;
@@ -38,7 +39,7 @@ public class SalaDB {
 	@SuppressWarnings("unchecked")
 	public static List<Sala> searchSale(String naziv) {
 	List<Sala> results = null;
-	Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+	Session session=factory.openSession();
 	Criteria c = session.createCriteria(Sala.class, "sala");
 	if(naziv != null)
 		c.add(Restrictions.like("naziv", "%"+naziv+"%").ignoreCase());
@@ -47,14 +48,14 @@ public class SalaDB {
 	}
 	
 	public static void updateSala(Sala sala) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.merge(sala);
 		t.commit();
 	}
 	
 	public static void deleteSala(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		Sala result = getSalaById(id);
 		session.delete(result);

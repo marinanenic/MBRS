@@ -23,10 +23,11 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import ${class.typePackage}.*;
 
 public class ${class.name}DB {
+	private static SessionFactory factory = new AnnotationConfiguration().configure().buildSessionFactory();
 
 	@SuppressWarnings("unchecked")
 	public static List<${class.name}> get${class.label}(){
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		List<${class.name}> results = session.createQuery("from ${class.name}").list(); 
 		t.commit();
@@ -35,7 +36,7 @@ public class ${class.name}DB {
 	}
 	
 	public static void save${class.name}(${class.name} ${class.name?lower_case}) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.persist(${class.name?lower_case});
 		t.commit();
@@ -43,7 +44,7 @@ public class ${class.name}DB {
 	}
 	
 	public static ${class.name} get${class.name}ById(${properties?first.type} id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		${class.name} ${class.name?lower_case} = (${class.name})session.get(${class.name}.class, id);
 		session.close();  
 		return ${class.name?lower_case};
@@ -60,7 +61,7 @@ public class ${class.name}DB {
 <#elseif pro.id><#if !first>, <#else><#assign first = false></#if><#if pro.type == "int">Integer<#else>${pro.type?cap_first}</#if> ${p.name}${pro.name}</#if></#list><#elseif p.searchBy><#rt>
 <#if !first>, <#else><#assign first = false></#if><#if p.type == "String" || p.enumType?? || p.type == "Boolean">${p.type} ${p.name}<#else>${p.type} ${p.name}od, ${p.type} ${p.name}do</#if></#if></#list>) {
 	List<${class.name}> results = null;
-	Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+	Session session=factory.openSession();
 	Criteria c = session.createCriteria(${class.name}.class, "${class.name?lower_case}");
 	<#list class.properties as p>
 	<#if p.upper==1 && p.classType??>
@@ -104,14 +105,14 @@ public class ${class.name}DB {
 	}
 	
 	public static void update${class.name}(${class.name} ${class.name?lower_case}) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.merge(${class.name?lower_case});
 		t.commit();
 	}
 	
 	public static void delete${class.name}(${properties?first.type} id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		${class.name} result = get${class.name}ById(id);
 		session.delete(result);
@@ -123,7 +124,7 @@ public class ${class.name}DB {
 	@SuppressWarnings("unchecked")
 	public static List<${class.name}> get${class.label}From${p.type}(${p.classType.properties?first.type} ${p.type?lower_case}_id) {
 		List<${class.name}> results = null;
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Criteria c = session.createCriteria(${class.name}.class, "${class.name?lower_case}");
 		c.createAlias("${class.name?lower_case}.${p.name}", "${p.name}");
 		c.add(Restrictions.eq("${p.name}.${p.type?lower_case}_id", ${p.type?lower_case}_id));

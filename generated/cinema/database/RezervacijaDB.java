@@ -9,10 +9,11 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import cinema.*;
 
 public class RezervacijaDB {
+	private static SessionFactory factory = new AnnotationConfiguration().configure().buildSessionFactory();
 
 	@SuppressWarnings("unchecked")
 	public static List<Rezervacija> getRezervacije(){
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		List<Rezervacija> results = session.createQuery("from Rezervacija").list(); 
 		t.commit();
@@ -21,7 +22,7 @@ public class RezervacijaDB {
 	}
 	
 	public static void saveRezervacija(Rezervacija rezervacija) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.persist(rezervacija);
 		t.commit();
@@ -29,7 +30,7 @@ public class RezervacijaDB {
 	}
 	
 	public static Rezervacija getRezervacijaById(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Rezervacija rezervacija = (Rezervacija)session.get(Rezervacija.class, id);
 		session.close();  
 		return rezervacija;
@@ -38,7 +39,7 @@ public class RezervacijaDB {
 	@SuppressWarnings("unchecked")
 	public static List<Rezervacija> searchRezervacije(Boolean placena, Integer projekcijaprojekcija_id, Integer sjedistesjediste_id) {
 	List<Rezervacija> results = null;
-	Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+	Session session=factory.openSession();
 	Criteria c = session.createCriteria(Rezervacija.class, "rezervacija");
 	if(placena != null)
 		c.add(Restrictions.eq("placena", placena));
@@ -51,14 +52,14 @@ public class RezervacijaDB {
 	}
 	
 	public static void updateRezervacija(Rezervacija rezervacija) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.merge(rezervacija);
 		t.commit();
 	}
 	
 	public static void deleteRezervacija(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		Rezervacija result = getRezervacijaById(id);
 		session.delete(result);
@@ -68,7 +69,7 @@ public class RezervacijaDB {
 	@SuppressWarnings("unchecked")
 	public static List<Rezervacija> getRezervacijeFromProjekcija(int projekcija_id) {
 		List<Rezervacija> results = null;
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Criteria c = session.createCriteria(Rezervacija.class, "rezervacija");
 		c.createAlias("rezervacija.projekcija", "projekcija");
 		c.add(Restrictions.eq("projekcija.projekcija_id", projekcija_id));
@@ -79,7 +80,7 @@ public class RezervacijaDB {
 	@SuppressWarnings("unchecked")
 	public static List<Rezervacija> getRezervacijeFromSjediste(int sjediste_id) {
 		List<Rezervacija> results = null;
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Criteria c = session.createCriteria(Rezervacija.class, "rezervacija");
 		c.createAlias("rezervacija.sjediste", "sjediste");
 		c.add(Restrictions.eq("sjediste.sjediste_id", sjediste_id));

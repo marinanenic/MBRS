@@ -9,10 +9,11 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import cinema.*;
 
 public class SjedisteDB {
+	private static SessionFactory factory = new AnnotationConfiguration().configure().buildSessionFactory();
 
 	@SuppressWarnings("unchecked")
 	public static List<Sjediste> getSjedista(){
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		List<Sjediste> results = session.createQuery("from Sjediste").list(); 
 		t.commit();
@@ -21,7 +22,7 @@ public class SjedisteDB {
 	}
 	
 	public static void saveSjediste(Sjediste sjediste) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.persist(sjediste);
 		t.commit();
@@ -29,7 +30,7 @@ public class SjedisteDB {
 	}
 	
 	public static Sjediste getSjedisteById(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Sjediste sjediste = (Sjediste)session.get(Sjediste.class, id);
 		session.close();  
 		return sjediste;
@@ -38,7 +39,7 @@ public class SjedisteDB {
 	@SuppressWarnings("unchecked")
 	public static List<Sjediste> searchSjedista(Integer salasala_id, String salanaziv) {
 	List<Sjediste> results = null;
-	Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+	Session session=factory.openSession();
 	Criteria c = session.createCriteria(Sjediste.class, "sjediste");
 	if(salasala_id != null)
 		c.add(Restrictions.eq("sala.sala_id", salasala_id));
@@ -50,14 +51,14 @@ public class SjedisteDB {
 	}
 	
 	public static void updateSjediste(Sjediste sjediste) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		session.merge(sjediste);
 		t.commit();
 	}
 	
 	public static void deleteSjediste(int id) {
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Transaction t = session.beginTransaction();
 		Sjediste result = getSjedisteById(id);
 		session.delete(result);
@@ -67,7 +68,7 @@ public class SjedisteDB {
 	@SuppressWarnings("unchecked")
 	public static List<Sjediste> getSjedistaFromSala(int sala_id) {
 		List<Sjediste> results = null;
-		Session session=new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		Session session=factory.openSession();
 		Criteria c = session.createCriteria(Sjediste.class, "sjediste");
 		c.createAlias("sjediste.sala", "sala");
 		c.add(Restrictions.eq("sala.sala_id", sala_id));
